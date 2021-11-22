@@ -13,12 +13,11 @@ export default function Login(props) {
 
   const onLogin = (e) => {
     e.preventDefault();
-    console.log('asdads')
-
+    
     let formData = new FormData(e.currentTarget);
 
     let email = formData.get("userEmail")
-
+    
     authService.login(email)
 
     history.push("/");
@@ -35,7 +34,7 @@ export default function Login(props) {
                 error
                 fullWidth
                 id="userEmail"
-                name="email"
+                name="userEmail"
                 label="User email"
                 defaultValue=""
                 placeholder="Enter your email"
@@ -46,7 +45,7 @@ export default function Login(props) {
                 error
                 fullWidth
                 id="userPassword"
-                name="password"
+                name="userPassword"
                 label="User password"
                 defaultValue=""
                 placeholder="Enter your password"
