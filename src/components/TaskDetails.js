@@ -3,7 +3,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 
-export default function TaskDetails() {
+export default function TaskDetails({
+  match
+}) {
+
   return (
     <div className="card-details-page">
       <Card variant="outlined">
