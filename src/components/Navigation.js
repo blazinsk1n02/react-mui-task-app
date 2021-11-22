@@ -3,6 +3,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 
 export default function Navigation() {
@@ -26,6 +27,16 @@ export default function Navigation() {
             color="inherit"
           >
             <AccountCircle fontSize="large" />
+          </IconButton>
+        </Link>
+        <Link to="/logout">
+          <IconButton
+            edge="end"
+            aria-label="account of current user"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <LogoutIcon fontSize="large" />
           </IconButton>
         </Link>
       </Toolbar>

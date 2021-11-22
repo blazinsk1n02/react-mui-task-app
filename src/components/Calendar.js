@@ -13,7 +13,7 @@ export default function Calendar() {
     <div className="calendar-container">
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <StaticDatePicker
-          orientation="vertical"
+          orientation="portrait"
           openTo="day"
           value={value}
           shouldDisableDate={isWeekend}
