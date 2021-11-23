@@ -9,8 +9,6 @@ export default function TaskItem({
   task
 }) {
 
-  console.log(task)
-
   return (
     <>
       <ListItem

@@ -1,14 +1,24 @@
 import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
-import Icon from '@mui/material/Icon';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import { useEffect, useState } from 'react';
 import * as taskService from '../services/taskService'
 import TaskItem from './TaskItem';
+import CreateTaskDialog from './CreateTaskDialog';
 
 export default function TaskCollection() {
 
   const [tasks, setTasks] = useState([])
+  const [taskDialog, setTaskDialog] = useState(false)
+
+  const handleClickOpen = () => {
+    setTaskDialog(true);
+  };
+
+  const handleClose = () => {
+    setTaskDialog(false);
+  };
 
   useEffect(() => {
 
@@ -19,19 +29,26 @@ export default function TaskCollection() {
   }, []);
 
   return (
-    <List >
-      <h2>Good morning Kiril,</h2>
-      <h2>you have quite a busy schedule</h2>
+    <div className="task-container">
+      <h2>Good morning Kiril!</h2>
 
-      {tasks.map(x => <TaskItem key={x.id} task={x} />)}
+      <List >
+        {tasks.length > 0
+          ? tasks.map(x => <TaskItem key={x.id} task={x} />)
+          : <h2>You don't have any tasks yet.</h2>
+        }
+      </List>
 
+      <div className="btn-container">
+        <IconButton className="add-task-btn"
+          onClick={handleClickOpen}
+          color="primary"
+          aria-label="add new task">
+          <ControlPointIcon />
+        </IconButton>
+      </div>
 
-      <IconButton color="primary" aria-label="add to shopping cart">
-        <Icon
-          baseClassName="fas"
-          className="fa-plus-circle"
-        />
-      </IconButton>
-    </List>
+      <CreateTaskDialog open={taskDialog} close={handleClose} />
+    </div>
   )
 }
