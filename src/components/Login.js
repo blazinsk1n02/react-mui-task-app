@@ -5,20 +5,21 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import LoginIcon from '@mui/icons-material/Login';
 
+import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import * as authService from '../services/authService'
 
-export default function Login(props) {
+export default function Login() {
   const history = useHistory();
 
   const onLogin = (e) => {
     e.preventDefault();
-    
+
     let formData = new FormData(e.currentTarget);
 
-    let email = formData.get("userEmail")
-    
-    authService.login(email)
+    let email = formData.get("userEmail");
+
+    authService.login(email);
 
     history.push("/");
   }
@@ -61,7 +62,9 @@ export default function Login(props) {
                 <LoginIcon />
                 Login
               </Button>
-              <Button size="small">Sign up</Button>
+              <Link
+                to="/register"
+                className="registration-link">Register</Link>
             </div>
           </CardActions>
         </Card>

@@ -4,6 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+
 import { Link } from 'react-router-dom';
 
 export default function Navigation() {
@@ -22,7 +23,7 @@ export default function Navigation() {
         <Link to="/login">
           <IconButton
             edge="end"
-            aria-label="account of current user"
+            aria-label="login"
             aria-haspopup="true"
             color="inherit"
           >
@@ -32,7 +33,7 @@ export default function Navigation() {
         <Link to="/logout">
           <IconButton
             edge="end"
-            aria-label="account of current user"
+            aria-label="logout"
             aria-haspopup="true"
             color="inherit"
           >
