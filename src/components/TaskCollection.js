@@ -12,14 +12,6 @@ export default function TaskCollection() {
   const [tasks, setTasks] = useState([])
   const [taskDialog, setTaskDialog] = useState(false)
 
-  const handleClickOpen = () => {
-    setTaskDialog(true);
-  };
-
-  const handleClose = () => {
-    setTaskDialog(false);
-  };
-
   useEffect(() => {
 
     taskService.getAll()
@@ -28,13 +20,30 @@ export default function TaskCollection() {
       })
   }, []);
 
+  const handleClickOpen = () => {
+    setTaskDialog(true);
+  };
+
+  const handleClose = () => {
+    setTaskDialog(false);
+  };
+
+  const deleteTaskClickHandler = (id) => {
+    setTasks(oldTasks => oldTasks.filter( task => task.id !== id))
+  }
+
   return (
     <div className="task-container">
       <h2>Good morning Kiril!</h2>
 
       <List >
         {tasks.length > 0
-          ? tasks.map(x => <TaskItem key={x.id} task={x} />)
+          ? tasks.map(x =>
+            <TaskItem
+              key={x.id}
+              task={x}
+              onDelete={deleteTaskClickHandler}
+            />)
           : <h2>You don't have any tasks yet.</h2>
         }
       </List>

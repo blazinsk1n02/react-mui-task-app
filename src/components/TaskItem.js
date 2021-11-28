@@ -6,7 +6,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 export default function TaskItem({
-  task
+  task,
+  onDelete
 }) {
 
   return (
@@ -14,7 +15,10 @@ export default function TaskItem({
       <ListItem
         sx={{ marginBottom: '5px' }}
         secondaryAction={
-          <IconButton edge="end" aria-label="delete">
+          <IconButton
+            onClick={() => {onDelete(task.id)}}
+            edge="end"
+            aria-label="delete">
             <DeleteIcon />
           </IconButton>
         }
