@@ -25,3 +25,14 @@ export const createTask = async (task) => {
 
   return result;
 }
+
+// export const createTask = (task) => {
+//   return fetch(`${API_URL}/todos`, {
+//     method: 'POST',
+//     headers: {
+//       'content-type': 'application-json'
+//     },
+//     body: JSON.stringify(task)
+//   })
+//     .then(res => res.json())
+// };

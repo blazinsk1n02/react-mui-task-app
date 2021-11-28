@@ -64,7 +64,9 @@ export default function Login() {
               </Button>
               <Link
                 to="/register"
-                className="registration-link">Register</Link>
+                className="registration-link">
+                Register
+              </Link>
             </div>
           </CardActions>
         </Card>

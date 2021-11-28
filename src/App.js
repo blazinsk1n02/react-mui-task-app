@@ -18,7 +18,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/logout" component={Home} />
-          <Route path="/taskid" component={TaskDetails} />
+          <Route path="/tasks/:taskId" component={TaskDetails} />
         </Switch>
       </div>
     </div>

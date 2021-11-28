@@ -3,9 +3,25 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 
+import { useEffect, useState } from 'react';
+import * as taskService from '../services/taskService'
+
 export default function TaskDetails({
   match
 }) {
+
+  const [task, setTask] = useState([]);
+
+  useEffect(() => {
+
+    taskService.getAll()
+      .then(result => {
+        setTask(Object.values(result));
+      });
+  }, []);
+
+
+  let selectedTask = task.filter(x => x.id == match.params.taskId)[0];
 
   return (
     <div className="card-details-page">
@@ -13,7 +29,7 @@ export default function TaskDetails({
         <CardContent>
           <div className="entry-date">20.11.2021</div>
           <div className="task-title">
-            List item 1
+            {selectedTask.text}
           </div>
           <div>
             <small className="task-note">Task note</small>
