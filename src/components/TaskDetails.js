@@ -13,23 +13,22 @@ export default function TaskDetails({
   const [task, setTask] = useState([]);
 
   useEffect(() => {
-
     taskService.getAll()
       .then(result => {
-        setTask(Object.values(result));
+        setTask(result);
       });
-  }, []);
+  }, [])
 
 
   let selectedTask = task.filter(x => x.id == match.params.taskId)[0];
-
+console.log(selectedTask)
   return (
     <div className="card-details-page">
       <Card variant="outlined">
         <CardContent>
           <div className="entry-date">20.11.2021</div>
           <div className="task-title">
-            {selectedTask.text}
+            asdasd
           </div>
           <div>
             <small className="task-note">Task note</small>

@@ -30,7 +30,7 @@ export default function TaskItem({
           disableGutters
         >
           <ListItemButton dense>
-            <ListItemText>{task.text}</ListItemText>
+            <ListItemText>{task.title}</ListItemText>
           </ListItemButton>
         </ListItem>
       </Link>
