@@ -3,9 +3,10 @@ import IconButton from '@mui/material/IconButton';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import { useEffect, useState } from 'react';
-import * as taskService from '../services/taskService'
 import TaskItem from './TaskItem';
 import CreateTaskDialog from './CreateTaskDialog';
+import { supabase } from '../lib/supabaseClient'
+import * as taskService from '../services/taskService'
 
 export default function TaskCollection() {
 
@@ -28,9 +29,14 @@ export default function TaskCollection() {
     setTaskDialog(false);
   };
 
-  const deleteTaskClickHandler = (id) => {
-    setTasks(oldTasks => oldTasks.filter( task => task.id !== id))
-  }
+  const deleteTaskClickHandler = async (id) => {
+    try {
+        await supabase.from("tasks").delete().eq("id", id);
+        setTasks(tasks.filter((x) => x.id !== id));
+    } catch (error) {
+        console.log("error", error);
+    }
+  };
 
   return (
     <div className="task-container">
