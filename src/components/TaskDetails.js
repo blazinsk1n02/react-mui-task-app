@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as taskService from '../services/taskService'
+import { supabase } from '../lib/supabaseClient'
 
 export default function TaskDetails() {
   const [task, setTask] = useState([]);
@@ -19,12 +20,19 @@ export default function TaskDetails() {
       });
   }, [taskId]);
 
-  // const handleChange = (event) => {
-  //   setValue(event.target.value);
-  // };
+  const handleChangeOnBlur = async (event) => {
+    let note = event.target.value;
+
+    const { error } = await supabase
+      .from("tasks")
+      .update({ note: note })
+      .eq("id", task.id);
+
+      if (error) throw error;
+  };
 
   return (
-    <div className="card-details-page">
+    <div className="task-details">
       <Card variant="outlined">
         <CardContent>
           <div className="entry-date">{task.created_at}</div>
@@ -33,9 +41,12 @@ export default function TaskDetails() {
           </div>
           <div>
             <TextField
+              onBlur={handleChangeOnBlur}
               multiline
+              defaultValue={task.note}
               rows={3}
               placeholder="Enter note ..."
+              fullWidth
             />
           </div>
         </CardContent>

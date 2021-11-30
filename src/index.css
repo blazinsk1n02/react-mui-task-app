@@ -87,18 +87,44 @@ header.MuiAppBar-root {
   text-decoration: none;
 }
 
-.MuiListItem-root {
-  margin-bottom: 15px !important;
+.task-container .MuiListItem-root {
+  margin-bottom: 15px;
   box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
 }
 
-.btn-container {
+.task-container .btn-container {
   flex: 1;
-  padding: 10px 48px 10px 10px !important;
+  padding: 10px 48px 10px 10px;
 }
 
-.add-task-btn svg {
-  font-size: 55px !important;
+.task-container .add-task-btn svg {
+  font-size: 55px;
+}
+
+/* Task Details */
+.task-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.task-details .task-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 15px 0 25px 0;
+}
+
+.task-details .MuiCard-root {
+  padding: 2% 4%;
+}
+
+.task-details .btn-container {
+  padding: 0;
+}
+
+.task-details .entry-date {
+  color: #999;
 }
 
 /* Login */
@@ -119,3 +145,4 @@ header.MuiAppBar-root {
   cursor: pointer;
   text-decoration: underline;
 }
+
