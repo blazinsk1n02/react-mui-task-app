@@ -12,7 +12,7 @@ export const getOne = async (id) => {
   let { data } = await supabase
     .from('tasks')
     .select('*')
-    .eq("id", id)
+    .order("id", { ascending: false });
 
   return Object.values(data);
 }

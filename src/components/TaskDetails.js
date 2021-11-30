@@ -1,7 +1,8 @@
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 
 import { useEffect, useState } from 'react';
@@ -15,9 +16,9 @@ export default function TaskDetails() {
 
   useEffect(() => {
     taskService.getOne(taskId)
-      .then(result => {
-        setTask(...result);
-      });
+    .then(result => {
+      setTask(...result);
+    });
   }, [taskId]);
 
   const handleChangeOnBlur = async (event) => {
@@ -28,8 +29,20 @@ export default function TaskDetails() {
       .update({ note: note })
       .eq("id", task.id);
 
-      if (error) throw error;
+    if (error) throw error;
   };
+
+  const toggleTaskComplete = async () => {
+
+    const { error } = await supabase
+      .from("tasks")
+      .update({ is_complete: true })
+      .eq("id", task.id);
+
+    if (error) throw error;
+  };
+
+  console.log()
 
   return (
     <div className="task-details">
@@ -42,8 +55,8 @@ export default function TaskDetails() {
           <div>
             <TextField
               onBlur={handleChangeOnBlur}
-              multiline
               defaultValue={task.note}
+              multiline
               rows={3}
               placeholder="Enter note ..."
               fullWidth
@@ -52,9 +65,17 @@ export default function TaskDetails() {
         </CardContent>
         <CardActions>
           <div className="btn-container">
-            <Button variant="contained" size="large">
-              Complete
-            </Button>
+            <FormControlLabel
+              value="top"
+              control={
+                <Switch
+                  color="primary"
+                  onChange={toggleTaskComplete}
+                />
+              }
+              label="Complete"
+              labelPlacement="top"
+            />
           </div>
         </CardActions>
       </Card>
