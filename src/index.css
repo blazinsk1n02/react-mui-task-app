@@ -81,6 +81,8 @@ header.MuiAppBar-root {
 }
 
 .task-item-link {
+  width: 100%;
+  padding-right: 50px;
   color: inherit;
   text-decoration: none;
 }

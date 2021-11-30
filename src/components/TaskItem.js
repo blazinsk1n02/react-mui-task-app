@@ -13,27 +13,27 @@ export default function TaskItem({
 
   return (
     <>
-      <Link
-        to={`/tasks/${task.id}`}
-        className="task-item-link">
-        <ListItem
-          sx={{ marginBottom: '5px' }}
-          secondaryAction={
-            <IconButton
-              onClick={() => { onDelete(task.id) }}
-              edge="end"
-              aria-label="delete">
-              <DeleteIcon />
-            </IconButton>
-          }
-          disablePadding
-          disableGutters
-        >
+      <ListItem
+        sx={{ marginBottom: '5px' }}
+        secondaryAction={
+          <IconButton
+            onClick={() => { onDelete(task.id) }}
+            edge="end"
+            aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        }
+        disablePadding
+        disableGutters
+      >
+        <Link
+          to={`/tasks/${task.id}`}
+          className="task-item-link">
           <ListItemButton dense>
             <ListItemText>{task.title}</ListItemText>
           </ListItemButton>
-        </ListItem>
-      </Link>
+        </Link>
+      </ListItem>
     </>
   );
 }

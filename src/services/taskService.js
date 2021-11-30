@@ -7,3 +7,12 @@ export const getAll = async () => {
 
   return Object.values(data);
 }
+
+export const getOne = async (id) => {
+  let { data } = await supabase
+    .from('tasks')
+    .select('*')
+    .eq("id", id)
+
+  return Object.values(data);
+}
