@@ -19,7 +19,7 @@ export default function TaskCollection() {
       .then(result => {
         setTasks(result);
       })
-  }, []);
+  }, [taskDialog]);
 
   const handleClickOpen = () => {
     setTaskDialog(true);
@@ -31,10 +31,10 @@ export default function TaskCollection() {
 
   const deleteTaskClickHandler = async (id) => {
     try {
-        await supabase.from("tasks").delete().eq("id", id);
-        setTasks(tasks.filter((x) => x.id !== id));
+      await supabase.from("tasks").delete().eq("id", id);
+      setTasks(tasks.filter((x) => x.id !== id));
     } catch (error) {
-        console.log("error", error);
+      console.log("error", error);
     }
   };
 
@@ -63,7 +63,10 @@ export default function TaskCollection() {
         </IconButton>
       </div>
 
-      <CreateTaskDialog open={taskDialog} close={handleClose} />
+      <CreateTaskDialog
+        open={taskDialog}
+        close={handleClose}
+      />
     </div>
   )
 }
