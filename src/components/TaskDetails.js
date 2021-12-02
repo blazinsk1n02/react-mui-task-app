@@ -4,6 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
+import Moment from 'react-moment';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -16,10 +17,12 @@ export default function TaskDetails() {
 
   useEffect(() => {
     taskService.getOne(taskId)
-    .then(result => {
-      setTask(...result);
-    });
+      .then(result => {
+        setTask(...result);
+      });
   }, [taskId]);
+
+  const dateToFormat = task.created_at;
 
   const handleChangeOnBlur = async (event) => {
     let note = event.target.value;
@@ -42,13 +45,13 @@ export default function TaskDetails() {
     if (error) throw error;
   };
 
-  console.log()
-
   return (
     <div className="task-details">
       <Card variant="outlined">
         <CardContent>
-          <div className="entry-date">{task.created_at}</div>
+          <div className="entry-date">
+            <Moment date={dateToFormat} format="D MMM YYYY" />
+          </div>
           <div className="task-title">
             {task.title}
           </div>

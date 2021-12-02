@@ -13,14 +13,14 @@ export default function CreateTaskDialog({
   close
 }) {
 
-  const [data, setData] = useState({
+  const [newTask, setNewTask] = useState({
     title: '',
     note: ''
   });
 
   const changeHandler = (e) => {
-    setData({
-      ...data,
+    setNewTask({
+      ...newTask,
       [e.target.name]: e.target.value
     });
   }
@@ -32,13 +32,13 @@ export default function CreateTaskDialog({
       .from('tasks')
       .insert([
         {
-          title: data.title,
-          note: data.note,
+          title: newTask.title,
+          note: newTask.note,
           is_complete: false
         }
       ])
 
-    setData({ title: '', note: '' });
+    setNewTask({ title: '', note: '' });
   }
 
   return (
@@ -50,7 +50,7 @@ export default function CreateTaskDialog({
             <TextField
               name="title"
               onChange={changeHandler}
-              value={data.title}
+              value={newTask.title}
               label="New task"
               autoFocus
               fullWidth
@@ -61,7 +61,7 @@ export default function CreateTaskDialog({
             <TextField
               name="note"
               onChange={changeHandler}
-              value={data.note}
+              value={newTask.note}
               label="Note"
               fullWidth
               margin="dense"
@@ -73,7 +73,12 @@ export default function CreateTaskDialog({
           </DialogContent>
           <DialogActions>
             <div className="btn-container">
-              <Button size="large" type="submit" >Add</Button>
+              <Button
+                size="large"
+                type="submit"
+              >
+                Add
+              </Button>
             </div>
           </DialogActions>
         </form>
