@@ -21,6 +21,16 @@ export default function TaskDetails() {
         setTask(...result);
       });
   }, [taskId]);
+  
+  const toggleTaskComplete = async (event) => {
+
+    console.log('inside', event.target.checked)
+
+    await supabase
+      .from("tasks")
+      .update({ is_complete: event.target.checked })
+      .eq("id", task.id)
+  };
 
   const dateToFormat = task.created_at;
 
@@ -30,16 +40,6 @@ export default function TaskDetails() {
     const { error } = await supabase
       .from("tasks")
       .update({ note: note })
-      .eq("id", task.id);
-
-    if (error) throw error;
-  };
-
-  const toggleTaskComplete = async () => {
-
-    const { error } = await supabase
-      .from("tasks")
-      .update({ is_complete: true })
       .eq("id", task.id);
 
     if (error) throw error;
@@ -69,7 +69,6 @@ export default function TaskDetails() {
         <CardActions>
           <div className="btn-container">
             <FormControlLabel
-              value="top"
               control={
                 <Switch
                   color="primary"

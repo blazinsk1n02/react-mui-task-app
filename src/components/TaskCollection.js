@@ -31,7 +31,10 @@ export default function TaskCollection() {
 
   const deleteTaskClickHandler = async (id) => {
     try {
-      await supabase.from("tasks").delete().eq("id", id);
+      await supabase.from("tasks")
+        .delete()
+        .eq("id", id);
+
       setTasks(tasks.filter((x) => x.id !== id));
     } catch (error) {
       console.log("error", error);
