@@ -5,7 +5,7 @@ export const getAll = async () => {
     .from('tasks')
     .select('*')
 
-  return Object.values(data);
+  return data;
 }
 
 export const getOne = async (id) => {
@@ -14,5 +14,5 @@ export const getOne = async (id) => {
     .select('*')
     .eq("id", id);
 
-  return Object.values(data);
+  return data;
 }

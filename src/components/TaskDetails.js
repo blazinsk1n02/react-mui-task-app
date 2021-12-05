@@ -13,18 +13,20 @@ import { supabase } from '../lib/supabaseClient'
 
 export default function TaskDetails() {
   const [task, setTask] = useState([]);
+  const [isComplete, setIsComplete] = useState(false);
   const { taskId } = useParams();
 
   useEffect(() => {
     taskService.getOne(taskId)
       .then(result => {
         setTask(...result);
+
+        setIsComplete(result[0].is_complete);
       });
   }, [taskId]);
   
   const toggleTaskComplete = async (event) => {
-
-    console.log('inside', event.target.checked)
+    setIsComplete(event.target.checked);
 
     await supabase
       .from("tasks")
@@ -73,6 +75,7 @@ export default function TaskDetails() {
                 <Switch
                   color="primary"
                   onChange={toggleTaskComplete}
+                  checked={isComplete}
                 />
               }
               label="Complete"
