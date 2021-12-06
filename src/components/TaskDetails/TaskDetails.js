@@ -8,8 +8,9 @@ import Moment from 'react-moment';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import * as taskService from '../services/taskService'
-import { supabase } from '../lib/supabaseClient'
+import * as taskService from '../../services/taskService'
+import { supabase } from '../../lib/supabaseClient'
+import styles from './TaskDetails.module.css'
 
 export default function TaskDetails() {
   const [task, setTask] = useState([]);
@@ -48,13 +49,13 @@ export default function TaskDetails() {
   };
 
   return (
-    <div className="task-details">
-      <Card variant="outlined">
+    <div className={styles.taskDetails}>
+      <Card variant="outlined" className={styles.taskDetailsCard}>
         <CardContent>
-          <div className="entry-date">
+          <div className={styles.taskDetailsEntryDate}>
             <Moment date={dateToFormat} format="D MMM YYYY" />
           </div>
-          <div className="task-title">
+          <div className={styles.taskDetailsTitle}>
             {task.title}
           </div>
           <div>
@@ -68,8 +69,7 @@ export default function TaskDetails() {
             />
           </div>
         </CardContent>
-        <CardActions>
-          <div className="btn-container">
+        <CardActions className={styles.taskDetailsBtnContainer}>
             <FormControlLabel
               control={
                 <Switch
@@ -81,7 +81,6 @@ export default function TaskDetails() {
               label="Complete"
               labelPlacement="top"
             />
-          </div>
         </CardActions>
       </Card>
     </div>

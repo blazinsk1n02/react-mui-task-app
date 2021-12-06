@@ -5,12 +5,13 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import StaticDatePicker from '@mui/lab/StaticDatePicker';
 
 import { useState } from 'react'
+import styles from './Calendar.module.css'
 
 export default function Calendar() {
   const [value, setValue] = useState(new Date());
 
   return (
-    <div className="calendar-container">
+    <div className={styles.calendar}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <StaticDatePicker
           orientation="portrait"

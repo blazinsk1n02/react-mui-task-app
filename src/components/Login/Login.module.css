@@ -1,0 +1,20 @@
+.login {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+.cardActions {
+	padding: 5px 15px 15px 15px !important;
+}
+
+.registrationLink {
+	color: #1976d2;
+	margin-top: 16px;
+	text-decoration: none;
+}
+
+.registrationLink:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}

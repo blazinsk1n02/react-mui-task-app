@@ -1,0 +1,24 @@
+.taskDetails {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.taskDetailsCard {
+	padding: 2% 4%;
+}
+
+.taskDetailsTitle {
+	font-size: 1.2em;
+	font-weight: 600;
+	margin: 15px 0 25px 0;
+}
+
+.taskDetailsEntryDate {
+	color: #999;
+}
+
+.taskDetailsBtnContainer {
+	justify-content: center;
+}

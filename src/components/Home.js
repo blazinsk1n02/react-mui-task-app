@@ -1,5 +1,5 @@
-import Calendar from './Calendar'
-import TaskCollection from './TaskCollection'
+import Calendar from './Calendar/Calendar'
+import TaskCollection from './TaskCollection/TaskCollection'
 
 export default function Home() {
   return (

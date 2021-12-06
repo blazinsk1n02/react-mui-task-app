@@ -1,0 +1,32 @@
+.taskCollection {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 2;
+	max-height: 100vh;
+	overflow: hidden;
+	padding: 0 4% !important;
+	text-align: left;
+}
+
+.taskCollection h2 {
+	flex: 1;
+	margin-top: 25px;
+}
+
+.taskCollection ul {
+	height: 80%;
+	overflow: auto;
+	padding: 0;
+}
+
+.btnContainer {
+	flex: 1;
+	padding: 10px 48px 10px 10px;
+	text-align: center;
+}
+
+.btnContainer button svg {
+	margin-right: 9px;
+	font-size: 55px;
+}

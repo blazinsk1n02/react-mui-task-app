@@ -1,7 +1,7 @@
 import Home from './components/Home'
-import Navigation from './components/Navigation'
-import Login from './components/Login'
-import TaskDetails from './components/TaskDetails'
+import Navigation from './components/Navigation/Navigation'
+import Login from './components/Login/Login'
+import TaskDetails from './components/TaskDetails/TaskDetails'
 import Register from './components/Register'
 
 import { Route, Switch } from 'react-router-dom'

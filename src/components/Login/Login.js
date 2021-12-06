@@ -7,7 +7,8 @@ import LoginIcon from '@mui/icons-material/Login';
 
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import * as authService from '../services/authService'
+import * as authService from '../../services/authService'
+import styles from './Login.module.css'
 
 export default function Login() {
   const history = useHistory();
@@ -25,7 +26,7 @@ export default function Login() {
   }
 
   return (
-    <div className="login-container">
+    <div className={styles.login}>
       <form id="login-form" onSubmit={onLogin}>
         <Card variant="outlined">
           <CardContent>
@@ -56,7 +57,7 @@ export default function Login() {
               />
             </div>
           </CardContent>
-          <CardActions>
+          <CardActions className={styles.cardActions}>
             <div className="btn-container">
               <Button type="submit" variant="contained" size="large">
                 <LoginIcon />
@@ -64,7 +65,7 @@ export default function Login() {
               </Button>
               <Link
                 to="/register"
-                className="registration-link">
+                className={styles.registrationLink}>
                 Register
               </Link>
             </div>

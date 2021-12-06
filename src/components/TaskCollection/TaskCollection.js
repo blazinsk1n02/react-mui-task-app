@@ -3,10 +3,11 @@ import IconButton from '@mui/material/IconButton';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
 import { useEffect, useState } from 'react';
-import TaskItem from './TaskItem';
-import CreateTaskDialog from './CreateTaskDialog';
-import { supabase } from '../lib/supabaseClient'
-import * as taskService from '../services/taskService'
+import TaskItem from '../TaskItem/TaskItem';
+import CreateTaskDialog from '../CreateTaskDialog';
+import { supabase } from '../../lib/supabaseClient'
+import * as taskService from '../../services/taskService'
+import styles from './TaskCollection.module.css'
 
 export default function TaskCollection() {
 
@@ -42,7 +43,7 @@ export default function TaskCollection() {
   };
 
   return (
-    <div className="task-container">
+    <div className={styles.taskCollection}>
       <h2>Good morning Kiril!</h2>
 
       <List >
@@ -57,8 +58,8 @@ export default function TaskCollection() {
         }
       </List>
 
-      <div className="btn-container">
-        <IconButton className="add-task-btn"
+      <div className={styles.btnContainer}>
+        <IconButton
           onClick={handleClickOpen}
           color="primary"
           aria-label="add new task">
