@@ -2,20 +2,22 @@ import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import TaskItem from '../TaskItem/TaskItem';
 import CreateTaskDialog from '../CreateTaskDialog';
 import { supabase } from '../../lib/supabaseClient'
 import * as taskService from '../../services/taskService'
 import styles from './TaskCollection.module.css'
 
+import { AuthContext } from '../../contexts/AuthContext';
+
 export default function TaskCollection() {
 
-  const [tasks, setTasks] = useState([])
-  const [taskDialog, setTaskDialog] = useState(false)
+  const [tasks, setTasks] = useState([]);
+  const [taskDialog, setTaskDialog] = useState(false);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-
     taskService.getAll()
       .then(result => {
         setTasks(result);
@@ -44,7 +46,7 @@ export default function TaskCollection() {
 
   return (
     <div className={styles.taskCollection}>
-      <h2>Good morning Kiril!</h2>
+      <h2>Good morning {user.email}!</h2>
 
       <List >
         {tasks.length > 0
