@@ -7,13 +7,17 @@ import LoginIcon from '@mui/icons-material/Login';
 import Collapse from '@mui/material/Collapse';
 import { useSnackbar } from 'notistack';
 
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { supabase } from '../../lib/supabaseClient'
 import styles from './Login.module.css'
 
+import { AuthContext } from '../../contexts/AuthContext';
+
 export default function Login() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { login } = useContext(AuthContext);
   const history = useHistory();
 
   const customSnackbar = (msg) => {
@@ -40,6 +44,9 @@ export default function Login() {
       })
 
       if (error) throw error;
+      
+      const userData = supabase.auth.user()
+      login(userData);
       history.push("/");
     }
     catch (error) {
