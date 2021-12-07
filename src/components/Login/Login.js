@@ -4,54 +4,72 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import LoginIcon from '@mui/icons-material/Login';
+import Collapse from '@mui/material/Collapse';
+import { useSnackbar } from 'notistack';
 
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
-import * as authService from '../../services/authService'
+import { supabase } from '../../lib/supabaseClient'
 import styles from './Login.module.css'
 
 export default function Login() {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const history = useHistory();
 
-  const onLogin = (e) => {
+  const customSnackbar = (msg) => {
+		enqueueSnackbar(msg, {
+			anchorOrigin: {
+				vertical: 'top',
+				horizontal: 'center',
+			},
+			variant: 'error',
+			persist: false,
+			TransitionComponent: Collapse,
+		});
+	}
+
+  const onLogin = async (e) => {
     e.preventDefault();
 
-    let formData = new FormData(e.currentTarget);
+    const { email, password } = Object.fromEntries(new FormData(e.currentTarget));
 
-    let email = formData.get("userEmail");
+    try {
+      const { error } = await supabase.auth.signIn({
+        email: email,
+        password: password
+      })
 
-    authService.login(email);
-
-    history.push("/");
+      if (error) throw error;
+      history.push("/");
+    }
+    catch (error) {
+      customSnackbar(error.message);
+    }
   }
 
   return (
     <div className={styles.login}>
-      <form id="login-form" onSubmit={onLogin}>
+      <form onSubmit={onLogin}>
         <Card variant="outlined">
           <CardContent>
             <h1>Login</h1>
             <div>
               <TextField
-                error
                 fullWidth
-                id="userEmail"
-                name="userEmail"
-                label="User email"
+                name="email"
+                label="Email"
                 defaultValue=""
                 placeholder="Enter your email"
                 variant="standard"
                 margin="normal"
               />
               <TextField
-                error
                 fullWidth
-                id="userPassword"
-                name="userPassword"
-                label="User password"
+                name="password"
+                label="Password"
                 defaultValue=""
                 placeholder="Enter your password"
-                helperText="Incorrect entry."
+                helperText=""
                 variant="standard"
                 margin="normal"
               />
@@ -60,7 +78,7 @@ export default function Login() {
           <CardActions className={styles.cardActions}>
             <div className="btn-container">
               <Button type="submit" variant="contained" size="large">
-                <LoginIcon />
+                <LoginIcon sx={{ mr: 1 }} />
                 Login
               </Button>
               <Link
