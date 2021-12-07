@@ -16,3 +16,7 @@ export const getOne = async (id) => {
 
   return data;
 }
+
+export const logout = async () => {
+  await supabase.auth.signOut()
+}
