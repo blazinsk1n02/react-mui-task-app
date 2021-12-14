@@ -8,10 +8,11 @@ import TaskDetails from './components/TaskDetails/TaskDetails'
 import Register from './components/Register/Register'
 
 import { Route, Switch } from 'react-router-dom'
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AuthContext } from './contexts/AuthContext';
 
 import './App.css';
+import { supabase } from './lib/supabaseClient';
 
 const initialAuthState = {
   id: '',
@@ -21,6 +22,22 @@ const initialAuthState = {
 
 function App() {
   const [user, setUser] = useState(initialAuthState);
+
+  useEffect(() => {
+    initUser();
+  }, []);
+
+  // Initialize the user based on the stored session
+  const initUser = useCallback(async () => {
+    const session = supabase.auth.session();
+    await supabase.auth.signIn({
+      refreshToken: session?.refresh_token,
+    });
+    const userData = supabase.auth.user()
+    if (userData) {
+      login(userData);
+    }
+  }, []);
 
   const login = (userData) => {
     setUser({
