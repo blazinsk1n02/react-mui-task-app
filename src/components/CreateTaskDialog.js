@@ -31,7 +31,7 @@ export default function CreateTaskDialog({
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      let { error } = await supabase
+      await supabase
         .from('tasks')
         .insert([
           {

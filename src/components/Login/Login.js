@@ -16,7 +16,7 @@ import styles from './Login.module.css'
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Login() {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const { login } = useContext(AuthContext);
   const history = useHistory();
 

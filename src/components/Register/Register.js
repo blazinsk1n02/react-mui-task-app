@@ -12,7 +12,7 @@ import { supabase } from '../../lib/supabaseClient'
 import styles from './Register.module.css'
 
 export default function Register() {
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+	const { enqueueSnackbar } = useSnackbar();
 	const history = useHistory();
 
 	const message = {
