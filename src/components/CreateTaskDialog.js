@@ -6,7 +6,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { supabase } from '../lib/supabaseClient'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function CreateTaskDialog({
   open,
@@ -17,6 +19,7 @@ export default function CreateTaskDialog({
     title: '',
     note: ''
   });
+  const { user } = useContext(AuthContext);
 
   const changeHandler = (e) => {
     setNewTask({
@@ -27,16 +30,20 @@ export default function CreateTaskDialog({
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    await supabase
-      .from('tasks')
-      .insert([
-        {
-          title: newTask.title,
-          note: newTask.note,
-          is_complete: false
-        }
-      ])
+    try {
+      let { error } = await supabase
+        .from('tasks')
+        .insert([
+          {
+            title: newTask.title,
+            note: newTask.note,
+            user_id: user.id,
+            is_complete: false
+          }
+        ])
+    } catch (error) {
+      console.log("error", error);
+    }
 
     setNewTask({ title: '', note: '' });
   }
