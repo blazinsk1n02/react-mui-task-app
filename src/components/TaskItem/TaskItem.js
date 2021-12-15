@@ -9,6 +9,7 @@ import styles from './TaskItem.module.css'
 
 export default function TaskItem({
   task,
+  user,
   onDelete
 }) {
 
@@ -23,7 +24,7 @@ export default function TaskItem({
             edge="end"
             aria-label="delete"
             className={styles.deleteBtn}
-            >
+          >
             <DeleteIcon />
           </IconButton>
         }
@@ -34,7 +35,10 @@ export default function TaskItem({
           to={`/tasks/${task.id}`}
           className="task-item-link">
           <ListItemButton dense>
-            <ListItemText>{task.title}</ListItemText>
+            <ListItemText>
+              <div className={styles.taskTitle}>{task.title}</div>
+              <small className={styles.userEmail}>{user}</small>
+            </ListItemText>
           </ListItemButton>
         </Link>
       </ListItem>

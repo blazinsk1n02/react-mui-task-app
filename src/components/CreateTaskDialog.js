@@ -37,6 +37,7 @@ export default function CreateTaskDialog({
           {
             title: newTask.title,
             note: newTask.note,
+            email: user.email,
             user_id: user.id,
             is_complete: false
           }
@@ -46,6 +47,8 @@ export default function CreateTaskDialog({
     }
 
     setNewTask({ title: '', note: '' });
+
+    close();
   }
 
   return (
