@@ -10,11 +10,10 @@
 }
 
 .taskCollection h2 {
-	flex: 1;
 	margin-top: 25px;
 }
 
-.taskCollection ul {
+.cardsContainer {
 	height: 80%;
 	overflow: auto;
 	padding: 0;

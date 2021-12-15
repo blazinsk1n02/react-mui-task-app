@@ -25,11 +25,13 @@ export default function TaskCollection() {
 
   return (
     <div className={styles.taskCollection}>
-      <h2>Good morning {user.email}!</h2>
+      <h2>Hello, <small>{user.email}</small>!</h2>
 
-      <TasksCard
-        shouldUpdate={shouldReload}
-      />
+      <div className={styles.cardsContainer}>
+        <TasksCard
+          shouldUpdate={shouldReload}
+        />
+      </div>
 
       <div className={styles.btnContainer}>
         <IconButton

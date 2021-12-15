@@ -1,5 +1,4 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import List from '@mui/material/List'
 
 import TaskItem from '../TaskItem/TaskItem';
 import { useEffect, useState, useContext } from 'react';
@@ -50,31 +49,27 @@ export default function TasksCard(
 
 	return (
 		<>
-			<div className={styles.TaskCard}>
-				<div className={styles.CardContent}>
-					{currentUserTasks.map(x =>
-						<TaskItem
-							key={x.id}
-							task={x}
-							onDelete={deleteTaskClickHandler}
-						/>)
-					}
-				</div>
-			</div>
+			<List>
+				{currentUserTasks.map(x =>
+					<TaskItem
+						key={x.id}
+						task={x}
+						onDelete={deleteTaskClickHandler}
+					/>)
+				}
+			</List>
 
-			<div className={styles.TaskCard}>
-				<div className={styles.CardContent}>
-					<p><strong>Team tasks</strong></p>
-					{altUserTasks.map(x =>
-						<TaskItem
-							key={x.id}
-							task={x}
-							user={x.email}
-							onDelete={deleteTaskClickHandler}
-						/>)
-					}
-				</div>
-			</div>
+			<p className={styles.cardHeading}>Team tasks</p>
+			<List>
+				{altUserTasks.map(x =>
+					<TaskItem
+						key={x.id}
+						task={x}
+						user={x.email}
+						onDelete={deleteTaskClickHandler}
+					/>)
+				}
+			</List>
 		</>
 	)
 }

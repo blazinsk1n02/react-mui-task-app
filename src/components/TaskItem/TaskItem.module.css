@@ -10,6 +10,14 @@
 	text-decoration: none;
 }
 
+.taskTitle {
+	font-weight: bold;
+}
+
+.userEmail {
+	color: #838383;
+}
+
 .deleteBtn {
 	right: 15px;
 }
