@@ -25,7 +25,7 @@ export default function TaskCollection() {
 
   return (
     <div className={styles.taskCollection}>
-      <h2>Hello, <small>{user.email}</small>!</h2>
+      <h2>Hello <small>{user.email}</small>!</h2>
 
       <div className={styles.cardsContainer}>
         <TasksCard

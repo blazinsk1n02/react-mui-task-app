@@ -17,27 +17,20 @@ export default function TaskItem({
   user,
   onDelete
 }) {
-  const [isFlagged, setIsFlagged] = useState(false);
+
   const [currentTask, setCurrenTask] = useState(task);
 
   const flagTask = async (id) => {
-    try {
-      await supabase
-        .from("tasks")
-        .update({ is_flagged: !currentTask.is_flagged })
-        .eq("id", task.id)
+    await supabase
+      .from("tasks")
+      .update({ is_flagged: !currentTask.is_flagged })
+      .eq("id", task.id)
 
-        taskService.getOne(id)
-				.then(result => {
-          setCurrenTask(result[0])
-				})
-
-
-    } catch (error) {
-      console.log("error", error);
-    }
+    taskService.getOne(id)
+      .then(result => {
+        setCurrenTask(result[0])
+      })
   }
-
 
   return (
     <>
@@ -59,10 +52,14 @@ export default function TaskItem({
       >
         <IconButton
           onClick={() => { flagTask(currentTask.id) }}
+          className={styles.flagIcon}
           edge="start"
-          aria-label="delete"
+          aria-label="flag task"
         >
-          <FlagIcon color={currentTask.is_flagged ? 'success' : 'disabled'} />
+          {currentTask.is_flagged
+            ? <FlagIcon style={{ color: '#dc3545' }} />
+            : <FlagIcon style={{ color: 'rgba(0, 0, 0, 0.26)'}} />
+          }
         </IconButton>
         <Link
           to={`/tasks/${currentTask.id}`}

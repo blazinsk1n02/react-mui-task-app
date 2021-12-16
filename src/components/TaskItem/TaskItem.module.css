@@ -18,6 +18,10 @@
 	color: #838383;
 }
 
+.flagIcon {
+	margin-left: 0 !important;
+}
+
 .deleteBtn {
 	right: 15px;
 }
