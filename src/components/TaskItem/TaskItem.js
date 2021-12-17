@@ -39,7 +39,7 @@ export default function TaskItem({
         sx={{ marginBottom: '5px' }}
         secondaryAction={
           <IconButton
-            onClick={() => { onDelete(currentTask.id) }}
+            onClick={() => { onDelete(currentTask) }}
             edge="end"
             aria-label="delete"
             className={styles.deleteBtn}

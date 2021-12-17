@@ -5,17 +5,23 @@ import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import Moment from 'react-moment';
+import Collapse from '@mui/material/Collapse';
+import { useSnackbar } from 'notistack';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import * as taskService from '../../services/taskService'
 import { supabase } from '../../lib/supabaseClient'
 import styles from './TaskDetails.module.css'
 
+import { AuthContext } from '../../contexts/AuthContext';
+
 export default function TaskDetails() {
   const [task, setTask] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const { taskId } = useParams();
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     taskService.getOne(taskId)
@@ -25,14 +31,30 @@ export default function TaskDetails() {
         setIsComplete(result[0].is_complete);
       });
   }, [taskId]);
-  
-  const toggleTaskComplete = async (event) => {
-    setIsComplete(event.target.checked);
 
-    await supabase
-      .from("tasks")
-      .update({ is_complete: event.target.checked })
-      .eq("id", task.id)
+  const customSnackbar = (msg) => {
+    enqueueSnackbar(msg, {
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'center',
+      },
+      variant: 'error',
+      persist: false,
+      TransitionComponent: Collapse,
+    });
+  }
+
+  const toggleTaskComplete = async (event) => {
+    if (user.id === task.user_id) {
+      setIsComplete(event.target.checked);
+
+      await supabase
+        .from("tasks")
+        .update({ is_complete: event.target.checked })
+        .eq("id", task.id)
+    } else {
+      customSnackbar('Not authorized!');
+    }
   };
 
   const dateToFormat = task.created_at;
@@ -40,12 +62,10 @@ export default function TaskDetails() {
   const handleChangeOnBlur = async (event) => {
     let note = event.target.value;
 
-    const { error } = await supabase
+    await supabase
       .from("tasks")
       .update({ note: note })
       .eq("id", task.id);
-
-    if (error) throw error;
   };
 
   return (
@@ -66,21 +86,22 @@ export default function TaskDetails() {
               rows={3}
               placeholder="Enter note ..."
               fullWidth
+              disabled={(user.id !== task.user_id)? true : false}
             />
           </div>
         </CardContent>
         <CardActions className={styles.taskDetailsBtnContainer}>
-            <FormControlLabel
-              control={
-                <Switch
-                  color="primary"
-                  onChange={toggleTaskComplete}
-                  checked={isComplete}
-                />
-              }
-              label="Complete"
-              labelPlacement="top"
-            />
+          <FormControlLabel
+            control={
+              <Switch
+                color="primary"
+                onChange={toggleTaskComplete}
+                checked={isComplete}
+              />
+            }
+            label="Complete"
+            labelPlacement="top"
+          />
         </CardActions>
       </Card>
     </div>

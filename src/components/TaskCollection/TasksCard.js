@@ -37,12 +37,8 @@ export default function TasksCard(
 	}
 
 	const deleteTaskClickHandler = async (task) => {
-		try {
 
-			if (task.user_id !== user?.id) {
-				customSnackbar('Unable to delete this task');
-			}
-
+		if (task.user_id === user?.id) {
 			await supabase
 				.from("tasks")
 				.delete()
@@ -54,8 +50,8 @@ export default function TasksCard(
 					setTasks(result);
 				})
 
-		} catch (error) {
-			customSnackbar(error.message);
+		} else {
+			customSnackbar('Unable to delete this task');
 		}
 	};
 
