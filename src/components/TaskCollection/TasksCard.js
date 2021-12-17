@@ -51,7 +51,7 @@ export default function TasksCard(
 				})
 
 		} else {
-			customSnackbar('Unable to delete this task');
+			customSnackbar('Not authorized!');
 		}
 	};
 
@@ -70,6 +70,7 @@ export default function TasksCard(
 					<TaskItem
 						key={x.id}
 						task={x}
+						assignee={x.email}
 						onDelete={deleteTaskClickHandler}
 					/>)
 				}
@@ -81,7 +82,7 @@ export default function TasksCard(
 					<TaskItem
 						key={x.id}
 						task={x}
-						user={x.email}
+						assignee={x.email}
 						onDelete={deleteTaskClickHandler}
 					/>)
 				}
