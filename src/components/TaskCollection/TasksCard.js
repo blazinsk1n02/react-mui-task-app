@@ -1,4 +1,6 @@
 import List from '@mui/material/List'
+import Collapse from '@mui/material/Collapse';
+import { useSnackbar } from 'notistack';
 
 import TaskItem from '../TaskItem/TaskItem';
 import { useEffect, useState, useContext } from 'react';
@@ -12,6 +14,7 @@ export default function TasksCard(
 	shouldUpdate
 ) {
 	const [tasks, setTasks] = useState([]);
+	const { enqueueSnackbar } = useSnackbar();
 	const { user } = useContext(AuthContext);
 
 	useEffect(() => {
@@ -21,12 +24,29 @@ export default function TasksCard(
 			})
 	}, [shouldUpdate]);
 
-	const deleteTaskClickHandler = async (id) => {
+	const customSnackbar = (msg) => {
+		enqueueSnackbar(msg, {
+			anchorOrigin: {
+				vertical: 'top',
+				horizontal: 'center',
+			},
+			variant: 'error',
+			persist: false,
+			TransitionComponent: Collapse,
+		});
+	}
+
+	const deleteTaskClickHandler = async (task) => {
 		try {
+
+			if (task.user_id !== user?.id) {
+				customSnackbar('Unable to delete this task');
+			}
+
 			await supabase
 				.from("tasks")
 				.delete()
-				.eq("id", id)
+				.eq("id", task.id)
 				.eq("user_id", user?.id);
 
 			taskService.getAll()
@@ -35,7 +55,7 @@ export default function TasksCard(
 				})
 
 		} catch (error) {
-			console.log("error", error);
+			customSnackbar(error.message);
 		}
 	};
 
