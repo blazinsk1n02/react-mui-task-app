@@ -1,4 +1,4 @@
-#react-mui-task-app - Task manager app
+# react-mui-task-app - Task manager (wannabe) app
 
 ## Table of contents
 * [General info](#general-info)
@@ -8,7 +8,7 @@
 ## General info
 This is a project created with ReactJS, Material UI and Supabase\
 
-Note: The calendar part is not yet implemented!
+Disclaimer: The calendar part is not yet implemented!
 	
 ## Technologies
 * React: 17.0.2
