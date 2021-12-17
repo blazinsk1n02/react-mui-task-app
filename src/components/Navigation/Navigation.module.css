@@ -10,9 +10,11 @@
 }
 
 .headerToolbarLinks {
-  color: #fff;
+  color: rgba(0, 0, 0, 0.87);
+  text-decoration: none;
 }
 
-.headerToolbarLinksBtn {
+.toolbarIconButton {
   margin: 0 !important;
+  color: #fff !important;
 }
