@@ -23,29 +23,47 @@ export default function TaskCollection() {
     setShouldReload(true);
   };
 
+  const authenticated = 'authenticated';
+
+  console.log(styles.taskCollection)
+
   return (
     <div className={styles.taskCollection}>
-      <h2>Hello <small>{user.email}</small>!</h2>
+      {user.email
+        ? <h2>Hello, <small>{user.email}</small>!</h2>
+        : <h2>Hello!</h2>
+      }
 
-      <div className={styles.cardsContainer}>
+      <div className={
+        user.email
+          ? styles.userTaskContainer
+          : styles.guestTaskContainer
+      }>
         <TasksCard
           shouldUpdate={shouldReload}
         />
       </div>
 
-      <div className={styles.btnContainer}>
-        <IconButton
-          onClick={handleClickOpen}
-          color="primary"
-          aria-label="add new task">
-          <ControlPointIcon />
-        </IconButton>
-      </div>
+      {user.email
+        ? <>
+          <div className={styles.btnContainer}>
+            <IconButton
+              onClick={handleClickOpen}
+              color="primary"
+              aria-label="add new task">
+              <ControlPointIcon />
+            </IconButton>
+          </div>
 
-      <CreateTaskDialog
-        open={taskDialog}
-        close={handleClose}
-      />
+          <CreateTaskDialog
+            open={taskDialog}
+            close={handleClose}
+          />
+        </>
+        : null
+      }
+
+
     </div>
   )
 }

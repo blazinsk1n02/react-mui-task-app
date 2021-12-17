@@ -14,8 +14,14 @@
 	font-weight: 400;
 }
 
-.cardsContainer {
+.userTaskContainer {
 	height: 80%;
+	overflow: auto;
+	padding: 0;
+}
+
+.guestTaskContainer {
+	height: 100%;
 	overflow: auto;
 	padding: 0;
 }
