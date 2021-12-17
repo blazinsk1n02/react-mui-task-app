@@ -50,8 +50,9 @@ export default function Register() {
 			catch (error) {
 				customSnackbar(error.message);
 			}
+		} else {
+			customSnackbar(message.pwNoMatch);
 		}
-		customSnackbar(message.pwNoMatch);
 	}
 
 	return (
@@ -72,6 +73,7 @@ export default function Register() {
 							<TextField
 								name='password'
 								label="Password"
+								type="password"
 								variant="standard"
 								fullWidth
 								margin="normal"
@@ -80,6 +82,7 @@ export default function Register() {
 							<TextField
 								name='confirmPassword'
 								label="Confirm password"
+								type="password"
 								variant="standard"
 								fullWidth
 								margin="normal"
