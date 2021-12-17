@@ -17,7 +17,6 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 export default function TaskItem({
   task,
-  assignee,
   onDelete
 }) {
   

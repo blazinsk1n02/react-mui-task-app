@@ -70,7 +70,6 @@ export default function TasksCard(
 					<TaskItem
 						key={x.id}
 						task={x}
-						assignee={x.email}
 						onDelete={deleteTaskClickHandler}
 					/>)
 				}
@@ -82,7 +81,6 @@ export default function TasksCard(
 					<TaskItem
 						key={x.id}
 						task={x}
-						assignee={x.email}
 						onDelete={deleteTaskClickHandler}
 					/>)
 				}
