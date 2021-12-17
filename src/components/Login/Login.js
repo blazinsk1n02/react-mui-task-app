@@ -65,8 +65,6 @@ export default function Login() {
                 fullWidth
                 name="email"
                 label="Email"
-                defaultValue=""
-                placeholder="Enter your email"
                 variant="standard"
                 margin="normal"
               />
@@ -74,8 +72,7 @@ export default function Login() {
                 fullWidth
                 name="password"
                 label="Password"
-                defaultValue=""
-                placeholder="Enter your password"
+                type="password"
                 helperText=""
                 variant="standard"
                 margin="normal"

@@ -23,10 +23,6 @@ export default function TaskCollection() {
     setShouldReload(true);
   };
 
-  const authenticated = 'authenticated';
-
-  console.log(styles.taskCollection)
-
   return (
     <div className={styles.taskCollection}>
       {user.email
