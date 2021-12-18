@@ -88,7 +88,7 @@ export default function TaskItem({
           <ListItemButton dense>
             <ListItemText>
               <div className={styles.taskTitle}>{currentTask.title}{currentTask.is_flagged}</div>
-              <small className={styles.userEmail}>{user.email}</small>
+              <small className={styles.userEmail}>{currentTask.email}</small>
             </ListItemText>
           </ListItemButton>
         </Link>
