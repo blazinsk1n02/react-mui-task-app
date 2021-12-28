@@ -1,29 +1,44 @@
 import isWeekend from 'date-fns/isWeekend';
 import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import StaticDatePicker from '@mui/lab/StaticDatePicker';
+import moment from 'moment';
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import * as taskService from '../../services/taskService'
 import styles from './Calendar.module.css'
 
 export default function Calendar() {
-  const [value, setValue] = useState(new Date());
+  const [tasks, setTasks] = useState([]);
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    taskService.getAll()
+      .then(result => {
+        setTasks(result);
+      });
+  }, []);
+
+  const onDateChange = (newDate) => {
+    const formatSelectedDate = moment(newDate).format('DD/MM/YYYY');
+
+    const serverDateFormat = tasks.filter(x => {
+      return moment(x.created_at).format('DD/MM/YYYY') === formatSelectedDate
+    });
+
+    console.log(serverDateFormat)
+  };
+
 
   return (
     <div className={styles.calendar}>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <StaticDatePicker
-          orientation="portrait"
-          openTo="day"
-          value={value}
-          shouldDisableDate={isWeekend}
-          onChange={(newValue) => {
-            setValue(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </LocalizationProvider>
+      <StaticDatePicker
+        orientation="portrait"
+        openTo="day"
+        value={date}
+        shouldDisableDate={isWeekend}
+        onChange={onDateChange}
+        renderInput={(params) => <TextField {...params} />}
+      />
     </div>
   )
 }
