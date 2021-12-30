@@ -4,9 +4,12 @@ import CardContent from '@mui/material/CardContent';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
-import Moment from 'react-moment';
 import Collapse from '@mui/material/Collapse';
+import Moment from 'react-moment';
 import { useSnackbar } from 'notistack';
+
+import { useRecoilState } from 'recoil';
+import { getOneState } from '../../atoms/getOneState';
 
 import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
@@ -17,20 +20,11 @@ import styles from './TaskDetails.module.css'
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function TaskDetails() {
-  const [task, setTask] = useState([]);
-  const [isComplete, setIsComplete] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const { taskId } = useParams();
   const { user } = useContext(AuthContext);
-
-  useEffect(() => {
-    taskService.getOne(taskId)
-      .then(result => {
-        setTask(...result);
-
-        setIsComplete(result[0].is_complete);
-      });
-  }, [taskId]);
+  const [task, setTask] = useRecoilState(getOneState(taskId));
+  const [isComplete, setIsComplete] = useState(task.is_complete);
 
   const customSnackbar = (msg) => {
     enqueueSnackbar(msg, {
@@ -44,14 +38,21 @@ export default function TaskDetails() {
     });
   }
 
+  console.log(task)
+
   const toggleTaskComplete = async (event) => {
     if (user.id === task.user_id) {
-      setIsComplete(event.target.checked);
 
       await supabase
         .from("tasks")
         .update({ is_complete: event.target.checked })
         .eq("id", task.id)
+
+      setTask(prevState => ({
+        ...prevState,
+        is_complete: event.target.checked
+      }));
+
     } else {
       customSnackbar('Not authorized!');
     }
@@ -86,7 +87,7 @@ export default function TaskDetails() {
               rows={3}
               placeholder="Enter note ..."
               fullWidth
-              disabled={(user.id !== task.user_id)? true : false}
+              disabled={(user.id !== task.user_id) ? true : false}
             />
           </div>
         </CardContent>
