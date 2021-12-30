@@ -1,4 +1,7 @@
 import { SnackbarProvider } from 'notistack';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateAdapter from '@mui/lab/AdapterMoment';
+import { Suspense } from "react";
 
 import Home from './components/Home'
 import Navigation from './components/Navigation/Navigation'
@@ -53,22 +56,26 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      <SnackbarProvider maxSnack={3} hideIconVariant>
-        <div className="App">
-          <div className="main-container">
-            <Navigation />
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route path="/logout" component={Logout} />
-              <Route path="/tasks/:taskId" component={TaskDetails} />
-            </Switch>
-          </div>
-        </div>
-      </SnackbarProvider>
-    </AuthContext.Provider>
+    <Suspense fallback={<p>...Loading</p>}>
+      <LocalizationProvider dateAdapter={DateAdapter}>
+        <AuthContext.Provider value={{ user, login, logout }}>
+          <SnackbarProvider maxSnack={3} hideIconVariant>
+            <div className="App">
+              <div className="main-container">
+                <Navigation />
+                <Switch>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/login" component={Login} />
+                  <Route path="/register" component={Register} />
+                  <Route path="/logout" component={Logout} />
+                  <Route path="/tasks/:taskId" component={TaskDetails} />
+                </Switch>
+              </div>
+            </div>
+          </SnackbarProvider>
+        </AuthContext.Provider>
+      </LocalizationProvider>
+    </Suspense>
   );
 }
 
