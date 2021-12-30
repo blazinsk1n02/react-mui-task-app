@@ -2,27 +2,22 @@ import List from '@mui/material/List'
 import Collapse from '@mui/material/Collapse';
 import { useSnackbar } from 'notistack';
 
+import { useRecoilState } from "recoil";
+
 import TaskItem from '../TaskItem/TaskItem';
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabaseClient'
-import * as taskService from '../../services/taskService'
+import { getAllState } from '../../atoms/getAllState'
 
 import styles from './TaskCard.module.css'
 
 export default function TasksCard(
 	shouldUpdate
 ) {
-	const [tasks, setTasks] = useState([]);
 	const { enqueueSnackbar } = useSnackbar();
 	const { user } = useContext(AuthContext);
-
-	useEffect(() => {
-		taskService.getAll()
-			.then(result => {
-				setTasks(result);
-			})
-	}, [shouldUpdate]);
+  const [tasks, setTasks] = useRecoilState(getAllState)
 
 	const customSnackbar = (msg) => {
 		enqueueSnackbar(msg, {
@@ -37,19 +32,12 @@ export default function TasksCard(
 	}
 
 	const deleteTaskClickHandler = async (task) => {
-
 		if (task.user_id === user?.id) {
 			await supabase
 				.from("tasks")
 				.delete()
 				.eq("id", task.id)
 				.eq("user_id", user?.id);
-
-			taskService.getAll()
-				.then(result => {
-					setTasks(result);
-				})
-
 		} else {
 			customSnackbar('Not authorized!');
 		}
