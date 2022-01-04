@@ -10,6 +10,7 @@ import { useSnackbar } from 'notistack';
 
 import { useRecoilState } from 'recoil';
 import { getOneState } from '../../atoms/getOneState';
+import { taskCompletion } from '../../atoms/taskCompletion';
 
 import { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
@@ -23,7 +24,7 @@ export default function TaskDetails() {
   const { taskId } = useParams();
   const { user } = useContext(AuthContext);
   const [task, setTask] = useRecoilState(getOneState(taskId));
-  const [isComplete, setIsComplete] = useState(task.is_complete);
+  const [isComplete, setIsComplete] = useRecoilState(taskCompletion(taskId));
 
   const customSnackbar = (msg) => {
     enqueueSnackbar(msg, {
@@ -37,21 +38,24 @@ export default function TaskDetails() {
     });
   }
 
-  console.log(task)
+  // console.log(isComplete)
 
   const toggleTaskComplete = async (event) => {
+    console.log('e', event.target.checked)
     if (user.id === task.user_id) {
 
-      await supabase
-        .from("tasks")
-        .update({ is_complete: event.target.checked })
-        .eq("id", task.id)
+      try {
+        const { error, data } = await supabase
+          .from("tasks")
+          .update({ is_complete: event.target.checked })
+          .eq("id", task.id)
 
-      setTask(prevState => ({
-        ...prevState,
-        is_complete: event.target.checked
-      }));
+          setIsComplete(data[0].is_complete)
+          console.log(data[0].is_complete)
 
+      } catch (error) {
+        console.log("error", error);
+      }
     } else {
       customSnackbar('Not authorized!');
     }
@@ -96,7 +100,7 @@ export default function TaskDetails() {
               <Switch
                 color="primary"
                 onChange={toggleTaskComplete}
-                checked={isComplete}
+                // checked={isComplete}
               />
             }
             label="Complete"
