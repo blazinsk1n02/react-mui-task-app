@@ -9,7 +9,6 @@ import styles from './TaskCollection.module.css'
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function TaskCollection() {
-  const [shouldReload, setShouldReload] = useState(false);
   const [taskDialog, setTaskDialog] = useState(false);
   const { user } = useContext(AuthContext);
 
@@ -19,8 +18,6 @@ export default function TaskCollection() {
 
   const handleClose = () => {
     setTaskDialog(false);
-
-    setShouldReload(true);
   };
 
   return (
@@ -35,9 +32,7 @@ export default function TaskCollection() {
           ? styles.userTaskContainer
           : styles.guestTaskContainer
       }>
-        <TasksCard
-          shouldUpdate={shouldReload}
-        />
+        <TasksCard />
       </div>
 
       {user.email
