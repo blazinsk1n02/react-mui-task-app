@@ -7,18 +7,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { supabase } from '../lib/supabaseClient'
 import { useState, useContext } from 'react';
+import { useRecoilState } from 'recoil';
 
 import { AuthContext } from '../contexts/AuthContext';
+import { getAllState } from '../atoms/getAllState';
 
 export default function CreateTaskDialog({
   open,
   close
 }) {
-
   const [newTask, setNewTask] = useState({
     title: '',
     note: ''
   });
+  const [tasks, setTasks] = useRecoilState(getAllState);
   const { user } = useContext(AuthContext);
 
   const changeHandler = (e) => {
@@ -31,7 +33,7 @@ export default function CreateTaskDialog({
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await supabase
+      const { error, data } = await supabase
         .from('tasks')
         .insert([
           {
@@ -41,7 +43,9 @@ export default function CreateTaskDialog({
             user_id: user.id,
             is_complete: false
           }
-        ])
+        ]);
+
+      setTasks([...tasks, ...data])
     } catch (error) {
       console.log("error", error);
     }
