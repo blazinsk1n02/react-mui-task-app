@@ -13,9 +13,10 @@ Disclaimer: The calendar part is not yet implemented!
 ## Technologies
 * React: 17.0.2
 * react-router-dom: 5.3.0
-* React material UI: 5.1.1
 
+* State management provided by RecoilJS: 0.5.2
 * Database provided by Supabase: 1.28.2
+* React material UI: 5.1.1
 * Error notifications provided by notistack: 2.0.3
 * Time formatting provided by react-moment: 1.1.1
 	
