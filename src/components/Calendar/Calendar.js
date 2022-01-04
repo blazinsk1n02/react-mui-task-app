@@ -4,14 +4,14 @@ import StaticDatePicker from '@mui/lab/StaticDatePicker';
 import moment from 'moment';
 
 import { useState } from 'react'
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 
 import { getAllState } from '../../atoms/getAllState'
 import styles from './Calendar.module.css'
 
 export default function Calendar() {
   const [date, setDate] = useState(new Date());
-  const [tasks, setTasks] = useRecoilState(getAllState);
+  const tasks = useRecoilValue(getAllState);
 
   const onDateChange = (newDate) => {
     const formatSelectedDate = moment(newDate._d).format('DD/MM/YYYY');
