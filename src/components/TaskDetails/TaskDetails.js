@@ -11,9 +11,8 @@ import { useSnackbar } from 'notistack';
 import { useRecoilState } from 'recoil';
 import { getOneState } from '../../atoms/getOneState';
 
-import { useEffect, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import * as taskService from '../../services/taskService'
 import { supabase } from '../../lib/supabaseClient'
 import styles from './TaskDetails.module.css'
 
