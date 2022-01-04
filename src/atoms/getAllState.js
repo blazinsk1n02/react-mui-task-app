@@ -4,7 +4,7 @@ import * as taskService from '../services/taskService'
 export const getAllState = atom({
 	key: 'tasks',
 	default: selector({
-		key: 'apiAllTasks',
+		key: 'getAllQuery',
 		get: async () => {
 			try {
 				return await taskService.getAll()
@@ -14,4 +14,3 @@ export const getAllState = atom({
 		},
 	}),
 });
-
