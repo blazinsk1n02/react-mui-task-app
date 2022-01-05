@@ -12,7 +12,7 @@ import { useRecoilState } from 'recoil';
 import { getOneState } from '../../atoms/getOneState';
 import { taskCompletion } from '../../atoms/taskCompletion';
 
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient'
 import styles from './TaskDetails.module.css'
@@ -38,21 +38,16 @@ export default function TaskDetails() {
     });
   }
 
-  // console.log(isComplete)
-
   const toggleTaskComplete = async (event) => {
-    console.log('e', event.target.checked)
     if (user.id === task.user_id) {
 
       try {
-        const { error, data } = await supabase
+        const { data } = await supabase
           .from("tasks")
           .update({ is_complete: event.target.checked })
           .eq("id", task.id)
 
-          setIsComplete(data[0].is_complete)
-          console.log(data[0].is_complete)
-
+        setIsComplete(data[0].is_complete)
       } catch (error) {
         console.log("error", error);
       }
@@ -100,7 +95,7 @@ export default function TaskDetails() {
               <Switch
                 color="primary"
                 onChange={toggleTaskComplete}
-                // checked={isComplete}
+                checked={isComplete}
               />
             }
             label="Complete"
