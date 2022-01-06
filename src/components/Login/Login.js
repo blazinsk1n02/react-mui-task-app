@@ -12,8 +12,6 @@ import { useHistory } from "react-router-dom";
 import { supabase } from '../../lib/supabaseClient'
 import styles from './Login.module.css'
 
-import { useEffect } from 'react';
-
 import { userAtom } from '../../atoms/user'
 import { useRecoilState } from 'recoil';
 
@@ -21,17 +19,6 @@ export default function Login() {
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const [user, setUser] = useRecoilState(userAtom);
-
-  // useEffect(() => {
-  //   initUser();
-  // }, [])
-
-  // const initUser = async () => {
-  //   const session = supabase.auth.session();
-  //   await supabase.auth.signIn({
-  //     refreshToken: session?.refresh_token,
-  //   });
-  // }
 
   const customSnackbar = (msg) => {
 		enqueueSnackbar(msg, {
@@ -44,7 +31,6 @@ export default function Login() {
 			TransitionComponent: Collapse,
 		});
 	}
-
 
   const onLogin = async (e) => {
     e.preventDefault();
