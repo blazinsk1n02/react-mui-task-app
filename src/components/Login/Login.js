@@ -7,18 +7,31 @@ import LoginIcon from '@mui/icons-material/Login';
 import Collapse from '@mui/material/Collapse';
 import { useSnackbar } from 'notistack';
 
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import { supabase } from '../../lib/supabaseClient'
 import styles from './Login.module.css'
 
-import { AuthContext } from '../../contexts/AuthContext';
+import { useEffect } from 'react';
+
+import { userAtom } from '../../atoms/user'
+import { useRecoilState } from 'recoil';
 
 export default function Login() {
   const { enqueueSnackbar } = useSnackbar();
-  const { login } = useContext(AuthContext);
   const history = useHistory();
+  const [user, setUser] = useRecoilState(userAtom);
+
+  // useEffect(() => {
+  //   initUser();
+  // }, [])
+
+  // const initUser = async () => {
+  //   const session = supabase.auth.session();
+  //   await supabase.auth.signIn({
+  //     refreshToken: session?.refresh_token,
+  //   });
+  // }
 
   const customSnackbar = (msg) => {
 		enqueueSnackbar(msg, {
@@ -32,21 +45,23 @@ export default function Login() {
 		});
 	}
 
+
   const onLogin = async (e) => {
     e.preventDefault();
 
     const { email, password } = Object.fromEntries(new FormData(e.currentTarget));
 
     try {
-      const { error } = await supabase.auth.signIn({
+      const { error, data } = await supabase.auth.signIn({
         email: email,
         password: password
       })
 
       if (error) throw error;
-      
-      const userData = supabase.auth.user()
-      login(userData);
+
+      const userData = data.user;
+      setUser(userData)
+
       history.push("/");
     }
     catch (error) {

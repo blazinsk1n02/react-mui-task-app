@@ -1,16 +1,17 @@
 import IconButton from '@mui/material/IconButton';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 
-import { useState, useContext } from 'react';
-import TasksCard from './TasksCard';
+import { useState } from 'react';
+import TasksCard from '../TaskCard/TasksCard';
 import CreateTaskDialog from '../CreateTaskDialog';
-import styles from './TaskCollection.module.css'
+import styles from './TaskCollection.module.css';
 
-import { AuthContext } from '../../contexts/AuthContext';
+import { userAtom } from '../../atoms/user';
+import { useRecoilValue } from 'recoil';
 
 export default function TaskCollection() {
+  const user  = useRecoilValue(userAtom);
   const [taskDialog, setTaskDialog] = useState(false);
-  const { user } = useContext(AuthContext);
 
   const handleClickOpen = () => {
     setTaskDialog(true);
@@ -53,8 +54,6 @@ export default function TaskCollection() {
         </>
         : null
       }
-
-
     </div>
   )
 }

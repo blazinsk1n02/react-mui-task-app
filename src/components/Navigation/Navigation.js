@@ -8,13 +8,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
 import { Link } from 'react-router-dom';
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import styles from './Navigation.module.css'
 
-import { AuthContext } from '../../contexts/AuthContext';
+import { userAtom } from '../../atoms/user';
+import { useRecoilValue } from 'recoil';
 
 export default function Navigation() {
-  const { user } = useContext(AuthContext);
+  const user  = useRecoilValue(userAtom);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenu = (event) => {

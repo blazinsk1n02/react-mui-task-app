@@ -1,20 +1,22 @@
 import * as taskService from '../services/taskService'
 
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
+import { userAtom } from '../atoms/user';
+import { useRecoilState } from 'recoil';
+
 export default function Logout() {
-	const {user, logout} = useContext(AuthContext);
+  const [user, setUser]  = useRecoilState(userAtom);
 	const history = useHistory();
 
 	useEffect(() => {
 		taskService.logout(user)
 			.then(() => {
-				logout();
+				setUser({});
 				history.push("/");
 			})
-	}, [history, user, logout])
+	}, [history, user])
 
 	return null;
 }

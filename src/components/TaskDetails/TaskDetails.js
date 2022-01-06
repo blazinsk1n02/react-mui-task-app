@@ -12,17 +12,17 @@ import { useRecoilState } from 'recoil';
 import { getOneState } from '../../atoms/getOneState';
 import { taskCompletion } from '../../atoms/taskCompletion';
 
-import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient'
 import styles from './TaskDetails.module.css'
 
-import { AuthContext } from '../../contexts/AuthContext';
+import { userAtom } from '../../atoms/user';
+import { useRecoilValue } from 'recoil';
 
 export default function TaskDetails() {
+  const user  = useRecoilValue(userAtom);
   const { enqueueSnackbar } = useSnackbar();
   const { taskId } = useParams();
-  const { user } = useContext(AuthContext);
   const [task, setTask] = useRecoilState(getOneState(taskId));
   const [isComplete, setIsComplete] = useRecoilState(taskCompletion(taskId));
 

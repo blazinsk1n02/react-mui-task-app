@@ -2,19 +2,19 @@ import List from '@mui/material/List'
 import Collapse from '@mui/material/Collapse';
 import { useSnackbar } from 'notistack';
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import TaskItem from '../TaskItem/TaskItem';
-import { useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabaseClient'
 import { getAllState } from '../../atoms/getAllState'
 
 import styles from './TaskCard.module.css'
 
+import { userAtom } from '../../atoms/user';
+
 export default function TasksCard() {
+  const user  = useRecoilValue(userAtom);
 	const { enqueueSnackbar } = useSnackbar();
-	const { user } = useContext(AuthContext);
 	const [tasks, setTasks] = useRecoilState(getAllState)
 
 	const customSnackbar = (msg) => {

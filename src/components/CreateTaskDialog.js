@@ -6,22 +6,22 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { supabase } from '../lib/supabaseClient'
-import { useState, useContext } from 'react';
-import { useRecoilState } from 'recoil';
+import { useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { AuthContext } from '../contexts/AuthContext';
 import { getAllState } from '../atoms/getAllState';
+import { userAtom } from '../atoms/user';
 
 export default function CreateTaskDialog({
   open,
   close
 }) {
+  const user  = useRecoilValue(userAtom);
   const [newTask, setNewTask] = useState({
     title: '',
     note: ''
   });
   const [tasks, setTasks] = useRecoilState(getAllState);
-  const { user } = useContext(AuthContext);
 
   const changeHandler = (e) => {
     setNewTask({

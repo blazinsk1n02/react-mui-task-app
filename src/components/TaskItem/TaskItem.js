@@ -8,21 +8,21 @@ import Collapse from '@mui/material/Collapse';
 import { useSnackbar } from 'notistack';
 
 import { Link } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import styles from './TaskItem.module.css'
 
 import { supabase } from '../../lib/supabaseClient'
 import * as taskService from '../../services/taskService'
-import { AuthContext } from '../../contexts/AuthContext';
+import { userAtom } from '../../atoms/user';
+import { useRecoilValue } from 'recoil';
 
 export default function TaskItem({
   task,
   onDelete
 }) {
-  
+  const user  = useRecoilValue(userAtom);
   const [currentTask, setCurrenTask] = useState(task);
 	const { enqueueSnackbar } = useSnackbar();
-  const { user } = useContext(AuthContext);
 
 	const customSnackbar = (msg) => {
 		enqueueSnackbar(msg, {
